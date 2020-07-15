@@ -13,6 +13,7 @@ typings/*
 typings.json
 
 # Eclipse specific
+.jshintrc
 .project
 .settings/
 
@@ -39,5 +40,4 @@ dist
 server/views/system/error.handlebars
 server/views/layouts/errorLayout.handlebars
 
-# Local Docker compose
-docker-compose.yml
+dist-dev

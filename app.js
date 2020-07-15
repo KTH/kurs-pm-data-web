@@ -9,7 +9,7 @@ const log = require('kth-node-log')
 const packageFile = require('./package.json')
 
 // catches uncaught exceptions
-process.on('uncaughtException', err => {
+process.on('uncaughtException', (err) => {
   log.error('APPLICATION EXIT - uncaught exception in ', packageFile.name)
   log.error('Uncaught Exception', { err })
   process.exit(1)

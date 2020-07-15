@@ -35,6 +35,8 @@ module.exports = {
     site_name: 'Om kursen',
     host_name: 'KTH',
 
+    skip_to_main_content: 'Hoppa till huvudinnehållet',
+
     memoLabel: 'Kurs-PM',
 
     noPublishedMemo: 'Inget publicerat kurs-PM',

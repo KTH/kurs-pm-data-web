@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component <Button> changes output after first click 1`] = `
+<DocumentFragment>
+  <button
+    type="button"
+  >
+    This is a message
+  </button>
+  <p>
+    Knappen fungerar!
+  </p>
+</DocumentFragment>
+`;
+
+exports[`Component <Button> creates a button 1`] = `
+<DocumentFragment>
+  <button
+    type="button"
+  >
+    This is a message
+  </button>
+</DocumentFragment>
+`;

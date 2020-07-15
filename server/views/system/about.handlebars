@@ -1,5 +1,5 @@
 <h1>About {{{appName}}}</h1>
-<hr/>
+<hr />
 <table class="about">
   <tr>
     <td><b>Application version:</b></td>
@@ -9,7 +9,7 @@
     <td><b>Application description:</b></td>
     <td>{{{appDescription}}}</td>
   </tr>
-  <tr>
+  <tr class="even">
     <td><b>Jenkins build id:</b></td>
     <td>{{{jenkinsBuild}}}</td>
   </tr>
@@ -17,7 +17,7 @@
     <td><b>Git branch:</b></td>
     <td>{{{gitBranch}}}</td>
   </tr>
-  <tr>
+  <tr class="even">
     <td><b>Git commit hash:</b></td>
     <td>{{{gitCommit}}}</td>
   </tr>
@@ -25,22 +25,26 @@
     <td><b>Build date:</b></td>
     <td>{{{jenkinsBuildDate}}}</td>
   </tr>
-  <tr>
+  <tr class="even">
     <td><b>Language:</b></td>
     <td>{{{language}}}</td>
   </tr>
 </table>
-<hr/>
+<hr />
 <table>
-<tr>
-  <td><b>Docker Name:</b></td>
-  <td>{{{dockerName}}}</td>
-</tr>
-<tr class="odd">
-  <td><b>Docker Version:</b></td>
-  <td>{{{dockerVersion}}}</td>
-</tr>
-<tr class="even">
+  <tr class="odd">
+    <td><b>Docker Name:</b></td>
+    <td>{{{dockerName}}}</td>
+  </tr>
+  <tr class="even">
+    <td><b>Started:</b></td>
+    <td>{{{started}}}</td>
+  </tr>
+  <tr class="odd">
+    <td><b>Docker Version:</b></td>
+    <td>{{{dockerVersion}}}</td>
+  </tr>
+  <tr class="even">
     <td><b>Hostname:</b></td>
     <td>{{{hostname}}}</td>
   </tr>
@@ -53,4 +57,3 @@
     <a href="/robots.txt">robots.txt</a>
   </dd>
 </dl>
-<!-- env: {{env}} -->

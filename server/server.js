@@ -49,7 +49,6 @@ log.init(logConfiguration)
  */
 const exphbs = require('express-handlebars')
 const path = require('path')
-
 server.set('views', path.join(__dirname, '/views'))
 server.set('layouts', path.join(__dirname, '/views/layouts'))
 server.set('partials', path.join(__dirname, '/views/partials'))
@@ -70,7 +69,6 @@ require('./views/helpers')
  * ******************************
  */
 const accessLog = require('kth-node-access-log')
-
 server.use(accessLog(config.logging.accessLog))
 
 /* ****************************
@@ -82,8 +80,8 @@ const browserConfigHandler = require('kth-node-configuration').getHandler(browse
 const express = require('express')
 
 // helper
-function setCustomCacheControl(res, mime) {
-  if (express.static.mime.lookup(mime) === 'text/html') {
+function setCustomCacheControl(res, path2) {
+  if (express.static.mime.lookup(path2) === 'text/html') {
     // Custom Cache-Control for HTML files
     res.setHeader('Cache-Control', 'no-cache')
   }
@@ -122,7 +120,6 @@ server.set('case sensitive routing', true)
  */
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(cookieParser())
@@ -132,7 +129,6 @@ server.use(cookieParser())
  * ***********************
  */
 const session = require('kth-node-session')
-
 const options = config.session
 options.sessionOptions.secret = config.sessionSecret
 server.use(session(options))
@@ -142,7 +138,6 @@ server.use(session(options))
  * ************************
  */
 const { languageHandler } = require('kth-node-web-common/lib/language')
-
 server.use(config.proxyPrefixPath.uri, languageHandler)
 
 /* ******************************
@@ -165,7 +160,6 @@ const {
   server
 })
 const { redirectAuthenticatedUserHandler } = require('./authentication')
-
 server.use(passport.initialize())
 server.use(passport.session())
 

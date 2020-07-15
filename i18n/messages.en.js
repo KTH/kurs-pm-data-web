@@ -35,6 +35,8 @@ module.exports = {
     site_name: 'About course',
     host_name: 'KTH',
 
+    skip_to_main_content: 'Skip to main content',
+
     memoLabel: 'Course memo',
 
     noPublishedMemo: 'No published course memo',
