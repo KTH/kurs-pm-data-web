@@ -67,31 +67,31 @@ export const resolveCourseImage = (imageFromAdmin, courseMainSubjects = '', lang
   return courseImage
 }
 
-@inject(['routerStore'])
+@inject(['applicationStore'])
 @observer
 class CourseMemo extends Component {
   componentDidMount() {
-    const { routerStore } = this.props
+    const { applicationStore } = this.props
     const siteNameElement = document.querySelector('.block.siteName a')
-    const translate = routerStore.language === 'en' ? englishTranslations : swedishTranslations
-    if (siteNameElement) siteNameElement.textContent = aboutCourseStr(translate, routerStore.courseCode)
+    const translate = applicationStore.language === 'en' ? englishTranslations : swedishTranslations
+    if (siteNameElement) siteNameElement.textContent = aboutCourseStr(translate, applicationStore.courseCode)
   }
 
   render() {
-    const { routerStore } = this.props
+    const { applicationStore } = this.props
     const { sideMenuLabels, aboutHeaderLabels, aboutMemoLabels, courseContactsLabels, extraInfo } = i18n.messages[
-      routerStore.userLanguageIndex
+      applicationStore.userLanguageIndex
     ]
 
-    let courseMemoItems = routerStore.memoDatas.map((m) => {
+    let courseMemoItems = applicationStore.memoDatas.map((m) => {
       const id = m.memoEndPoint
       const label = concatMemoName(m.semester, m.ladokRoundIds, m.memoCommonLangAbbr)
       return {
         id,
         semester: m.semester,
         label,
-        active: routerStore.activeMemoEndPoint(id),
-        url: `/kurs-pm/${routerStore.courseCode}/${id}`
+        active: applicationStore.activeMemoEndPoint(id),
+        url: `/kurs-pm/${applicationStore.courseCode}/${id}`
       }
     })
     // Duplicate id’s filtered out
@@ -107,25 +107,25 @@ class CourseMemo extends Component {
     return (
       // Class preview-container, or equivalent, not needed
       <Container className="kip-container about-container" fluid>
-        <Row>{breadcrumbs(routerStore.language)}</Row>
+        <Row>{breadcrumbs(applicationStore.language)}</Row>
         <Row>
           <Col lg="3" className="side-menu">
             <SideMenu
-              courseCode={routerStore.courseCode}
+              courseCode={applicationStore.courseCode}
               courseMemoItems={courseMemoItems}
               aboutCourseMemo
-              backLink={sideMenuBackLink[routerStore.language]}
+              backLink={sideMenuBackLink[applicationStore.language]}
               labels={sideMenuLabels}
             />
           </Col>
           <Col lg="9">
             <AboutHeader
-              courseCode={routerStore.courseCode}
-              title={routerStore.title}
-              credits={routerStore.credits}
-              creditUnitAbbr={routerStore.creditUnitAbbr}
+              courseCode={applicationStore.courseCode}
+              title={applicationStore.title}
+              credits={applicationStore.credits}
+              creditUnitAbbr={applicationStore.creditUnitAbbr}
               labels={aboutHeaderLabels}
-              language={routerStore.language}
+              language={applicationStore.language}
             />
             {aboutMemoLabels.aboutMemosText}
             <Row>
@@ -161,9 +161,9 @@ class CourseMemo extends Component {
               <Col lg="4" className="content-right">
                 <h2>{courseContactsLabels.courseContactsTitle}</h2>
                 <AboutCourseContacts
-                  languageIndex={routerStore.userLanguageIndex}
-                  infoContactName={routerStore.infoContactName}
-                  examiners={routerStore.examiners}
+                  languageIndex={applicationStore.userLanguageIndex}
+                  infoContactName={applicationStore.infoContactName}
+                  examiners={applicationStore.examiners}
                   labels={courseContactsLabels}
                 />
               </Col>

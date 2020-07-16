@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { inject, observer } from 'mobx-react'
+import { observer } from 'mobx-react'
+import { useStore } from '../mobx'
+
 import { Container, Row, Col, Breadcrumb, BreadcrumbItem, Alert } from 'reactstrap'
 
 import i18n from '../../../../i18n'
@@ -194,129 +196,145 @@ export const resolveCourseImage = (imageFromAdmin, courseMainSubjects = '', lang
   return courseImage
 }
 
-@inject(['routerStore'])
-@observer
-class CourseMemo extends Component {
-  componentDidMount() {
-    const { routerStore } = this.props
-    const siteNameElement = document.querySelector('.block.siteName a')
-    const translate = routerStore.language === 'en' ? englishTranslations : swedishTranslations
-    if (siteNameElement) siteNameElement.textContent = aboutCourseStr(translate, routerStore.courseCode)
-  }
+const CourseMemo = () => {
+  const { courseCode } = useStore()
 
-  render() {
-    const { routerStore } = this.props
-    if (routerStore.noMemoData()) {
-      return <Redirect to={`/kurs-pm/${routerStore.courseCode}/om-kurs-pm`} />
-    }
-    const allSections = renderAllSections(routerStore)
-    const courseImage = resolveCourseImage(
-      routerStore.imageFromAdmin,
-      routerStore.courseMainSubjects,
-      routerStore.memoLanguage
-    )
-    const courseImageUrl = `${routerStore.browserConfig.imageStorageUri}${courseImage}`
-    const {
-      courseFactsLabels,
-      courseMemoLinksLabels,
-      extraInfo,
-      coursePresentationLabels,
-      courseLinksLabels,
-      courseContactsLabels
-    } = i18n.messages[routerStore.memoLanguageIndex]
-    const { courseHeaderLabels, sideMenuLabels } = i18n.messages[routerStore.userLanguageIndex]
-
-    let courseMemoItems = routerStore.memoDatas.map((m) => {
-      const id = m.memoEndPoint
-      const label = concatMemoName(m.semester, m.ladokRoundIds, m.memoCommonLangAbbr)
-      const active = routerStore.activeMemoEndPoint(id)
-      return {
-        id,
-        label,
-        active,
-        url: `/kurs-pm/${routerStore.courseCode}/${id}`
-      }
-    })
-    // Duplicate id’s filtered out
-    courseMemoItems = courseMemoItems.filter((item, index, self) => index === self.findIndex((t) => t.id === item.id))
-
-    return (
-      // Class preview-container, or equivalent, not needed
-      <Container className="kip-container" fluid>
-        <Row>{breadcrumbs(routerStore.language, routerStore.courseCode)}</Row>
-        <Row>
-          <Col lg="3" className="side-menu">
-            <SideMenu
-              courseCode={routerStore.courseCode}
-              courseMemoItems={courseMemoItems}
-              backLink={sideMenuBackLink[routerStore.language]}
-              labels={sideMenuLabels}
-              language={routerStore.language}
-            />
-          </Col>
-          <Col lg="9">
-            <CourseHeader
-              courseMemoName={concatMemoName(routerStore.semester, routerStore.roundIds, routerStore.memoLanguage)}
-              courseTitle={routerStore.memoData.courseTitle}
-              courseCode={routerStore.courseCode}
-              labels={courseHeaderLabels}
-              language={routerStore.memoLanguage}
-            />
-            <Row>
-              <Col lg="8" className="text-break content-center">
-                <CoursePresentation
-                  courseImageUrl={courseImageUrl}
-                  introText={routerStore.sellingText}
-                  labels={coursePresentationLabels}
-                />
-                {allSections}
-              </Col>
-              <Col lg="4" className="content-right">
-                <Row className="mb-lg-4">
-                  <Col>
-                    <CourseFacts
-                      language={routerStore.memoLanguage}
-                      labels={courseFactsLabels}
-                      memoData={routerStore.memoData}
-                    />
-                  </Col>
-                </Row>
-                <Row className="my-lg-4">
-                  <Col>
-                    <CourseMemoLinks
-                      language={routerStore.memoLanguageIndex}
-                      labels={courseMemoLinksLabels}
-                      extraInfo={extraInfo}
-                      memoData={routerStore.memoData}
-                      courseMemoName={concatMemoName(
-                        routerStore.semester,
-                        routerStore.roundIds,
-                        routerStore.memoLanguage
-                      )}
-                    />
-                  </Col>
-                </Row>
-                <Row className="mt-lg-4">
-                  <Col>
-                    <CourseLinks language={routerStore.memoLanguage} labels={courseLinksLabels} />
-                  </Col>
-                </Row>
-                <Row className="mt-lg-4">
-                  <Col>
-                    <CourseContacts
-                      language={routerStore.memoLanguage}
-                      memoData={routerStore.memoData}
-                      labels={courseContactsLabels}
-                    />
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Container>
-    )
-  }
+  return (
+    <main id="mainContent">
+      <h1>{courseCode.get()}</h1>
+    </main>
+  )
 }
 
-export default CourseMemo
+export default observer(CourseMemo)
+
+// @inject(['applicationStore'])
+// @observer
+// class CourseMemo extends Component {
+//   componentDidMount() {
+//     const { applicationStore } = this.props
+//     const siteNameElement = document.querySelector('.block.siteName a')
+//     const translate = applicationStore.language === 'en' ? englishTranslations : swedishTranslations
+//     if (siteNameElement) siteNameElement.textContent = aboutCourseStr(translate, applicationStore.courseCode)
+//   }
+
+//   render() {
+//     const { applicationStore } = this.props
+//     if (applicationStore.noMemoData()) {
+//       return <Redirect to={`/kurs-pm/${applicationStore.courseCode}/om-kurs-pm`} />
+//     }
+//     const allSections = renderAllSections(applicationStore)
+//     const courseImage = resolveCourseImage(
+//       applicationStore.imageFromAdmin,
+//       applicationStore.courseMainSubjects,
+//       applicationStore.memoLanguage
+//     )
+//     const courseImageUrl = `${applicationStore.browserConfig.imageStorageUri}${courseImage}`
+//     const {
+//       courseFactsLabels,
+//       courseMemoLinksLabels,
+//       extraInfo,
+//       coursePresentationLabels,
+//       courseLinksLabels,
+//       courseContactsLabels
+//     } = i18n.messages[applicationStore.memoLanguageIndex]
+//     const { courseHeaderLabels, sideMenuLabels } = i18n.messages[applicationStore.userLanguageIndex]
+
+//     let courseMemoItems = applicationStore.memoDatas.map((m) => {
+//       const id = m.memoEndPoint
+//       const label = concatMemoName(m.semester, m.ladokRoundIds, m.memoCommonLangAbbr)
+//       const active = applicationStore.activeMemoEndPoint(id)
+//       return {
+//         id,
+//         label,
+//         active,
+//         url: `/kurs-pm/${applicationStore.courseCode}/${id}`
+//       }
+//     })
+//     // Duplicate id’s filtered out
+//     courseMemoItems = courseMemoItems.filter((item, index, self) => index === self.findIndex((t) => t.id === item.id))
+
+//     return (
+//       // Class preview-container, or equivalent, not needed
+//       <Container className="kip-container" fluid>
+//         <Row>{breadcrumbs(applicationStore.language, applicationStore.courseCode)}</Row>
+//         <Row>
+//           <Col lg="3" className="side-menu">
+//             <SideMenu
+//               courseCode={applicationStore.courseCode}
+//               courseMemoItems={courseMemoItems}
+//               backLink={sideMenuBackLink[applicationStore.language]}
+//               labels={sideMenuLabels}
+//               language={applicationStore.language}
+//             />
+//           </Col>
+//           <Col lg="9">
+//             <CourseHeader
+//               courseMemoName={concatMemoName(
+//                 applicationStore.semester,
+//                 applicationStore.roundIds,
+//                 applicationStore.memoLanguage
+//               )}
+//               courseTitle={applicationStore.memoData.courseTitle}
+//               courseCode={applicationStore.courseCode}
+//               labels={courseHeaderLabels}
+//               language={applicationStore.memoLanguage}
+//             />
+//             <Row>
+//               <Col lg="8" className="text-break content-center">
+//                 <CoursePresentation
+//                   courseImageUrl={courseImageUrl}
+//                   introText={applicationStore.sellingText}
+//                   labels={coursePresentationLabels}
+//                 />
+//                 {allSections}
+//               </Col>
+//               <Col lg="4" className="content-right">
+//                 <Row className="mb-lg-4">
+//                   <Col>
+//                     <CourseFacts
+//                       language={applicationStore.memoLanguage}
+//                       labels={courseFactsLabels}
+//                       memoData={applicationStore.memoData}
+//                     />
+//                   </Col>
+//                 </Row>
+//                 <Row className="my-lg-4">
+//                   <Col>
+//                     <CourseMemoLinks
+//                       language={applicationStore.memoLanguageIndex}
+//                       labels={courseMemoLinksLabels}
+//                       extraInfo={extraInfo}
+//                       memoData={applicationStore.memoData}
+//                       courseMemoName={concatMemoName(
+//                         applicationStore.semester,
+//                         applicationStore.roundIds,
+//                         applicationStore.memoLanguage
+//                       )}
+//                     />
+//                   </Col>
+//                 </Row>
+//                 <Row className="mt-lg-4">
+//                   <Col>
+//                     <CourseLinks language={applicationStore.memoLanguage} labels={courseLinksLabels} />
+//                   </Col>
+//                 </Row>
+//                 <Row className="mt-lg-4">
+//                   <Col>
+//                     <CourseContacts
+//                       language={applicationStore.memoLanguage}
+//                       memoData={applicationStore.memoData}
+//                       labels={courseContactsLabels}
+//                     />
+//                   </Col>
+//                 </Row>
+//               </Col>
+//             </Row>
+//           </Col>
+//         </Row>
+//       </Container>
+//     )
+//   }
+// }
+
+// export default CourseMemo

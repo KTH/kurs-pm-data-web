@@ -37,6 +37,11 @@ module.exports = {
 
     skip_to_main_content: 'Skip to main content',
 
+    template_app_works: 'You are up and running kth-node with React!',
+    template_store_text: 'Message from applicationStore',
+    template_try_me: 'Try me',
+    template_button_works: 'Button works!',
+
     memoLabel: 'Course memo',
 
     noPublishedMemo: 'No published course memo',

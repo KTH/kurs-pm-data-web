@@ -43,23 +43,23 @@ export const breadcrumbs = (language) => (
   </nav>
 )
 
-@inject(['routerStore'])
+@inject(['applicationStore'])
 @observer
 class CourseMemo extends Component {
   componentDidMount() {
-    const { routerStore } = this.props
+    const { applicationStore } = this.props
     const siteNameElement = document.querySelector('.block.siteName a')
-    const translate = routerStore.language === 'en' ? englishTranslations : swedishTranslations
+    const translate = applicationStore.language === 'en' ? englishTranslations : swedishTranslations
     if (siteNameElement) siteNameElement.textContent = translate.aboutCourseMemos
   }
 
   render() {
-    const { routerStore } = this.props
-    const translate = i18n.messages[routerStore.userLanguageIndex]
+    const { applicationStore } = this.props
+    const translate = i18n.messages[applicationStore.userLanguageIndex]
 
     return (
       <Container className="kip-container">
-        <Row>{breadcrumbs(routerStore.language, '')}</Row>
+        <Row>{breadcrumbs(applicationStore.language, '')}</Row>
         <Row>
           <Col lg="3">
             <SideMenu
@@ -67,7 +67,7 @@ class CourseMemo extends Component {
               courseMemoItems={[]}
               aboutCourseMemo
               labels={translate.sideMenuLabels}
-              backLink={sideMenuBackLink[routerStore.language]}
+              backLink={sideMenuBackLink[applicationStore.language]}
             />
           </Col>
           <Col>

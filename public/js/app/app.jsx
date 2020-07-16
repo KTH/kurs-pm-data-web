@@ -47,11 +47,11 @@ function appFactory(applicationStore) {
   return (
     <MobxStoreProvider initCallback={() => applicationStore}>
       <Switch>
-        <Route exact path="/kurs-pm/" component={AboutCourseMemos} />
-        <Route exact path="/kurs-pm/:courseCode" component={CourseMemo} />
-        <Route exact path="/kurs-pm/:courseCode/om-kurs-pm" component={AboutCourseMemo} />
-        <Route exact path="/kurs-pm/:courseCode/:id" component={CourseMemo} />
-        <Route exact path="/kurs-pm/:courseCode/:semester/:id" component={CourseMemo} />
+        <Route exact path="/" component={AboutCourseMemos} />
+        <Route exact path="/:courseCode" component={CourseMemo} />
+        <Route exact path="/:courseCode/om-kurs-pm" component={AboutCourseMemo} />
+        <Route exact path="/:courseCode/:id" component={CourseMemo} />
+        <Route exact path="/:courseCode/:semester/:id" component={CourseMemo} />
       </Switch>
     </MobxStoreProvider>
   )

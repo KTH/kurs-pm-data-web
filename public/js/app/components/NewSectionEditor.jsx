@@ -5,21 +5,21 @@ import { inject, observer } from 'mobx-react'
 import i18n from '../../../../i18n'
 import { ExtraHeaderHead } from './ContentHead'
 
-@inject(['routerStore'])
+@inject(['applicationStore'])
 @observer
 class NewSectionEditor extends Component {
   // eslint-disable-next-line react/state-in-constructor
   state = {
     isOpen: this.props.isEmptyNew || false,
-    contentForEditor: this.props.initialValue || '', // this.props.routerStore???
+    contentForEditor: this.props.initialValue || '', // this.props.applicationStore???
     contentForTitle: this.props.initialTitle || '', // Default value needed
     visibleInMemo: this.props.visibleInMemo,
     isEmptyNew: this.props.isEmptyNew || false
   }
 
-  userLangIndex = this.props.routerStore.language === 'sv' ? 1 : 0
+  userLangIndex = this.props.applicationStore.language === 'sv' ? 1 : 0
 
-  memoLangIndex = this.props.routerStore.memoLanguageIndex
+  memoLangIndex = this.props.applicationStore.memoLanguageIndex
 
   render() {
     const { contentId } = this.props // menuId, visibleInMemo

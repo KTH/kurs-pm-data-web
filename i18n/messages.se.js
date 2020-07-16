@@ -37,6 +37,11 @@ module.exports = {
 
     skip_to_main_content: 'Hoppa till huvudinnehållet',
 
+    template_app_works: 'kth-node är igång med hjälp av React!',
+    template_store_text: 'Meddelandet från applicationStore',
+    template_try_me: 'Testa ut',
+    template_button_works: 'Knappen fungerar!',
+
     memoLabel: 'Kurs-PM',
 
     noPublishedMemo: 'Inget publicerat kurs-PM',
