@@ -14,14 +14,14 @@ async function getIndex(req, res, next) {
   try {
     const lang = language.getLanguage(res)
 
-    const { createStore, getCompressedStoreCode, renderStaticPage } = getServerSideFunctions()
+    const { createStore, getcompressedApplicationStore, renderStaticPage } = getServerSideFunctions()
 
     const applicationStore = createStore()
     applicationStore.setLanguage(lang)
 
     await _fillApplicationStoreOnServerSide({ applicationStore, query: req.query })
 
-    const compressedStoreCode = getCompressedStoreCode(applicationStore)
+    const compressedApplicationStore = getcompressedApplicationStore(applicationStore)
 
     const { uri: basename } = serverConfig.proxyPrefixPath
     const html = renderStaticPage({ applicationStore, location: req.url, basename })
@@ -29,7 +29,7 @@ async function getIndex(req, res, next) {
     res.render('sample/index', {
       html,
       title: 'TODO',
-      compressedStoreCode,
+      compressedApplicationStore,
       description: 'TODO',
       breadcrumbsPath: [],
       lang

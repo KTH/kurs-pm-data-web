@@ -1,9 +1,11 @@
-<script>{ { { compressedStoreCode } } }</script>
+<script>
+  {{{compressedApplicationStore}}}
+</script>
 
 <div class="col">
   {{#if error}}
-  <p>Error: {{error}}</p>
+    <p>Error: {{error}}</p>
   {{else}}
-  <div id="app">{{{html}}}</div>
+    <div id="app">{{{html}}}</div>
   {{/if}}
 </div>

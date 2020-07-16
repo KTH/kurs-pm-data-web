@@ -20,7 +20,7 @@ function _getServerSideFunctions() {
       return createApplicationStore()
     },
 
-    getCompressedStoreCode(store) {
+    getcompressedApplicationStore(store) {
       const code = compressStoreIntoJavascriptCode(store)
       return code
     },

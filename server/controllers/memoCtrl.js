@@ -103,16 +103,15 @@ async function getContent(req, res, next) {
   try {
     const lang = language.getLanguage(res)
 
-    const { createStore, getCompressedStoreCode, renderStaticPage } = getServerSideFunctions()
+    const { createStore, getcompressedApplicationStore, renderStaticPage } = getServerSideFunctions()
 
     const applicationStore = createStore()
 
     await _fillApplicationStoreOnServerSide({ applicationStore, params: req.params })
     const responseLanguage = language.getLanguage(res) || 'sv'
-    applicationStore.language = responseLanguage
+    applicationStore.setLanguage(responseLanguage)
 
-    const compressedStoreCode = getCompressedStoreCode(applicationStore)
-    console.log('compressedStoreCode', compressedStoreCode)
+    const compressedApplicationStore = getcompressedApplicationStore(applicationStore)
 
     const { uri: basename } = serverConfig.proxyPrefixPath
     const html = renderStaticPage({ applicationStore, location: req.url, basename })
@@ -123,7 +122,7 @@ async function getContent(req, res, next) {
     res.render('memo/index', {
       html,
       title: shortDescription,
-      compressedStoreCode,
+      compressedApplicationStore,
       description: shortDescription,
       instrumentationKey: serverConfig.appInsights.instrumentationKey,
       breadcrumbsPath: [],

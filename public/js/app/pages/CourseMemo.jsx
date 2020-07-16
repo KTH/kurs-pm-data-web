@@ -197,7 +197,7 @@ export const resolveCourseImage = (imageFromAdmin, courseMainSubjects = '', lang
 }
 
 const CourseMemo = () => {
-  const { courseCode } = useStore()
+  const { courseCode, language } = useStore()
 
   return (
     <main id="mainContent">
