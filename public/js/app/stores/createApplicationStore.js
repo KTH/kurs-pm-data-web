@@ -9,11 +9,11 @@ export default createApplicationStore
 
 function createApplicationStore() {
   const store = {
-    language: observable.box(''),
+    language: '',
     courseCode: observable.box(''),
 
     setLanguage: action(function setLanguage(language) {
-      this.language.set(language)
+      this.language = language
     }),
     setCourseCode: action(function setCourseCode(courseCode) {
       this.courseCode.set(courseCode)

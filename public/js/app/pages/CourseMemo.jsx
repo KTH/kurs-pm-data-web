@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { observer } from 'mobx-react'
 import { useStore } from '../mobx'
 
@@ -199,6 +199,13 @@ export const resolveCourseImage = (imageFromAdmin, courseMainSubjects = '', lang
 const CourseMemo = () => {
   const { courseCode, language } = useStore()
 
+  // TODO: useEffect doesn’t work with SSR, find another solution
+  useEffect(() => {
+    const siteNameElement = document.querySelector('.block.siteName a')
+    const translate = language === 'en' ? englishTranslations : swedishTranslations
+    if (siteNameElement) siteNameElement.textContent = aboutCourseStr(translate, courseCode)
+  })
+
   return (
     <main id="mainContent">
       <h1>{courseCode.get()}</h1>
@@ -211,13 +218,6 @@ export default observer(CourseMemo)
 // @inject(['applicationStore'])
 // @observer
 // class CourseMemo extends Component {
-//   componentDidMount() {
-//     const { applicationStore } = this.props
-//     const siteNameElement = document.querySelector('.block.siteName a')
-//     const translate = applicationStore.language === 'en' ? englishTranslations : swedishTranslations
-//     if (siteNameElement) siteNameElement.textContent = aboutCourseStr(translate, applicationStore.courseCode)
-//   }
-
 //   render() {
 //     const { applicationStore } = this.props
 //     if (applicationStore.noMemoData()) {
